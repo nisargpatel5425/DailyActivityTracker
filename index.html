@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Activity Tracking Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .day {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .day h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .activity {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script>
+        function renderCalendar() {
+            const monthDropdown = document.getElementById('month');
+            const yearDropdown = document.getElementById('year');
+            const calendar = document.querySelector('.calendar');
+
+            const month = parseInt(monthDropdown.value, 10);
+            const year = parseInt(yearDropdown.value, 10);
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            calendar.innerHTML = '';
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'day';
+                dayDiv.innerHTML = `
+                    <h3>${monthDropdown.options[monthDropdown.selectedIndex].text} ${day}, ${year}</h3>
+                    <div class="activity">
+                        <span>Exercise</span>
+                        <input type="checkbox">
+                    </div>
+                    <div class="activity">
+                        <span>Read</span>
+                        <input type="checkbox">
+                    </div>
+                    <div class="activity">
+                        <span>Meditation</span>
+                        <input type="checkbox">
+                    </div>
+                `;
+                calendar.appendChild(dayDiv);
+            }
+        }
+
+        function updateCalendar() {
+            renderCalendar();
+        }
+    </script>
+</head>
+<body>
+    <h1>Daily Activity Tracking Calendar</h1>
+    <div class="controls">
+        <label for="month">Month:</label>
+        <select id="month">
+            <option value="0">January</option>
+            <option value="1">February</option>
+            <option value="2">March</option>
+            <option value="3">April</option>
+            <option value="4">May</option>
+            <option value="5">June</option>
+            <option value="6">July</option>
+            <option value="7">August</option>
+            <option value="8">September</option>
+            <option value="9">October</option>
+            <option value="10">November</option>
+            <option value="11">December</option>
+        </select>
+
+        <label for="year">Year:</label>
+        <select id="year">
+            <script>
+                const currentYear = new Date().getFullYear();
+                for (let i = currentYear - 10; i <= currentYear + 10; i++) {
+                    document.write(`<option value="${i}" ${i === currentYear ? 'selected' : ''}>${i}</option>`);
+                }
+            </script>
+        </select>
+
+        <button onclick="updateCalendar()">Submit</button>
+    </div>
+    <div class="calendar">
+        <!-- Calendar days will be rendered here -->
+    </div>
+</body>
+</html>
